@@ -1,0 +1,6 @@
+regex  is great and it is the best regex ever to exist in history of regex so i say this is the best regex i have ever seen in regex life
+for gui:
+Example GUI Workflow:
+Enter \d+ as the regex pattern.
+Enter ./documents (or the full path) as the folder path.
+Click the Search button.

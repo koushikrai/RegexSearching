@@ -1,0 +1,171 @@
+
+### **Project Plan: Regex-Based Search Engine**
+
+#### **1. Define the Core Features**
+- Input: A user-provided **regular expression**.
+- Processing: Search through a set of **text documents** to find matches.
+- Output: Display the **matching lines or words** and their **locations** (e.g., file name, line number).
+- Analysis: Provide insights into the **efficiency of different regex patterns** (e.g., runtime, memory usage).
+
+---
+
+### **2. Project Structure**
+- **Frontend (UI)**:
+  - Build a simple **command-line interface (CLI)** or a **web-based GUI** (e.g., using Flask or Tkinter).
+- **Backend**:
+  - Implement the regex search functionality using Python's `re` module.
+  - Load and preprocess documents for searching.
+- **Efficiency Analysis**:
+  - Measure runtime for different regex patterns using Python's `time` module.
+  - Report findings on which patterns are computationally expensive.
+
+---
+
+### **3. Implementation Steps**
+
+#### **Step 1: Setting Up the Environment**
+- Install Python and necessary libraries:
+  ```bash
+  pip install flask
+  ```
+  For a GUI-based approach:
+  ```bash
+  pip install tkinter
+  ```
+
+---
+
+#### **Step 2: Backend Regex Search Engine**
+Implement the core logic to:
+1. Load a set of documents.
+2. Search for regex matches within these documents.
+3. Return the results.
+
+**Example Code:**
+```python
+import re
+import os
+
+def search_documents(regex, folder_path):
+    """Search for regex matches in text files within a folder."""
+    results = []
+    pattern = re.compile(regex)
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            if file.endswith(".txt"):
+                file_path = os.path.join(root, file)
+                with open(file_path, 'r') as f:
+                    for line_number, line in enumerate(f, 1):
+                        if pattern.search(line):
+                            results.append({
+                                'file': file,
+                                'line_number': line_number,
+                                'line': line.strip()
+                            })
+    return results
+```
+
+---
+
+#### **Step 3: Build a Simple Interface**
+
+**Command-Line Interface (CLI):**
+```python
+if __name__ == "__main__":
+    regex = input("Enter a regular expression: ")
+    folder_path = input("Enter the folder path containing documents: ")
+    results = search_documents(regex, folder_path)
+
+    print("\nSearch Results:")
+    for result in results:
+        print(f"File: {result['file']}, Line: {result['line_number']}, Content: {result['line']}")
+```
+
+**GUI Option with Tkinter:**
+```python
+import tkinter as tk
+from tkinter import filedialog, scrolledtext
+
+def run_search():
+    regex = regex_input.get()
+    folder = folder_path.get()
+    results = search_documents(regex, folder)
+    output.delete(1.0, tk.END)
+    for res in results:
+        output.insert(tk.END, f"File: {res['file']}, Line: {res['line_number']}, Content: {res['line']}\n")
+
+root = tk.Tk()
+root.title("Regex Search Engine")
+
+tk.Label(root, text="Regex:").pack()
+regex_input = tk.Entry(root, width=50)
+regex_input.pack()
+
+tk.Label(root, text="Folder Path:").pack()
+folder_path = tk.Entry(root, width=50)
+folder_path.pack()
+
+search_button = tk.Button(root, text="Search", command=run_search)
+search_button.pack()
+
+output = scrolledtext.ScrolledText(root, width=60, height=20)
+output.pack()
+
+root.mainloop()
+```
+
+---
+
+#### **Step 4: Efficiency Analysis**
+- Measure execution time for different regex patterns:
+```python
+import time
+
+start_time = time.time()
+results = search_documents(r"\bword\b", "sample_folder")
+end_time = time.time()
+
+print(f"Time taken: {end_time - start_time:.4f} seconds")
+```
+- Generate a report on regex complexity and optimization tips.
+
+---
+
+#### **Step 5: Optional Enhancements**
+- Allow multiple regex patterns to be input simultaneously.
+- Display a summary of match counts per file.
+- Add filters (e.g., match whole words, case-insensitive search).
+- Store results in a database or file for future reference.
+
+---
+
+### **4. Next Steps**
+- Would you prefer a CLI or GUI for this project?
+- Should we include performance graphs for the regex efficiency analysis?
+- Let me know if you'd like me to help with specific modules or sections of the project!
+
+
+
+project/
+│
+├── regex_engine/
+│   ├── __init__.py           # Core logic package initialization
+│   ├── search.py             # Regex search functionality
+│   ├── analysis.py           # Efficiency analysis logic
+│
+├── interface/
+│   ├── __init__.py           # Interface package initialization
+│   ├── cli.py                # CLI-based interface
+│   ├── gui.py                # GUI-based interface (Tkinter)
+│   ├── web.py                # Web-based interface (Flask) [Optional]
+│
+├── utils/
+│   ├── __init__.py           # Utility functions package initialization
+│   ├── file_io.py            # File reading/writing utilities
+│   ├── metrics.py            # Performance metrics utilities
+│
+├── templates/                # [If using Flask] HTML templates for the web interface
+│   ├── index.html
+│
+├── main.py                   # Entry point for running the project
+└── README.md                 # Project documentation

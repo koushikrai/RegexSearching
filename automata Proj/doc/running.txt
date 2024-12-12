@@ -1,0 +1,20 @@
+Run the following command:
+
+python main.py
+
+When prompted, enter the following:
+
+Regular Expression: This is the pattern you want to search for in the text files. For example:
+To search for the word "regex": regex
+To search for any number: \d+
+To search for a specific word ignoring case: (?i)hello
+Folder Path: This should be the path to the folder that contains the .txt files you want to search. You can either type the absolute path or use a relative path if the folder is in the current directory.
+Example: ./documents (if you have a folder named documents in the same directory as your script)
+Or provide an absolute path like C:/Users/username/Documents/.
+
+for gui:
+Example GUI Workflow:
+Enter \d+ as the regex pattern.
+Enter ./documents (or the full path) as the folder path.
+Click the Search button.
+
